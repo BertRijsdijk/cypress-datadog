@@ -35,13 +35,20 @@ function iterateThroughTestSuitesAndSendMetrics(data) {
                 for (let j = 0; j < mochaAwesomeReport.results[i].suites.length; j++) {
                     for (let k = 0; k < (mochaAwesomeReport.results[i].suites[j].tests.length); k++) {
 
-                        dogapi.metric.send("function.monitoring.checkout." + (mochaAwesomeReport.results[i].suites[j].tests[k].title) +
-                            ".result", 1, {type: "count", tags: ["env:prd","alertLevel:"+
-                            (mochaAwesomeReport.results[i].suites[j].tests[k].state)]}, function(err, results){
+                        let state = (mochaAwesomeReport.results[i].suites[j].tests[k].state);
 
-                        console.log(("function.monitoring.checkout." + (mochaAwesomeReport.results[i].suites[j].tests[k].title) +
-                            ".result." + (mochaAwesomeReport.results[i].suites[j].tests[k].state)));
-                        });
+                        if (state === "failed") {
+                            dogapi.metric.send("check." + (mochaAwesomeReport.results[i].suites[j].tests[k].title) +
+                                ".result", 1, {type: "count", tags: ["env:prd","alertLevel:"+"failed"]}, function(err, results){
+                                console.log((mochaAwesomeReport.results[i].suites[j].tests[k].title) +(" failed"));
+                            });
+                        }
+                        if (state === "passed") {
+                            dogapi.metric.send("check." + (mochaAwesomeReport.results[i].suites[j].tests[k].title) +
+                                ".result", 1, {type: "count", tags: ["env:prd","alertLevel:"+"succes"]}, function(err, results){
+                            console.log((mochaAwesomeReport.results[i].suites[j].tests[k].title) +(" succes"));
+                            });
+                        }
                     }
                 }
                 }
