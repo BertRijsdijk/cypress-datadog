@@ -1,6 +1,6 @@
 const dogapi = require("dogapi");
 const fs = require("fs");
-const filesLocation = ('../cypress/reports/mochawesome/');
+const filesLocation = ('./cypress/reports/mochawesome/');
 
 const api_host = process.env.API_HOST;
 const api_key = process.env.API_KEY;
@@ -38,15 +38,15 @@ function iterateThroughTestSuitesAndSendMetrics(data) {
                         let state = (mochaAwesomeReport.results[i].suites[j].tests[k].state);
 
                         if (state === "failed") {
-                            dogapi.metric.send("check." + (mochaAwesomeReport.results[i].suites[j].tests[k].title) +
-                                ".result", 1, {type: "count", tags: ["env:prd","alertLevel:"+"failed"]}, function(err, results){
+                            dogapi.metric.send("metric." + (mochaAwesomeReport.results[i].suites[j].tests[k].title), 1,
+                                {type: "count", tags: ["env:prd","alertLevel:"+"failed"]}, function(err, results){
                                 console.log((mochaAwesomeReport.results[i].suites[j].tests[k].title) +(" failed"));
                             });
                         }
                         if (state === "passed") {
-                            dogapi.metric.send("check." + (mochaAwesomeReport.results[i].suites[j].tests[k].title) +
-                                ".result", 1, {type: "count", tags: ["env:prd","alertLevel:"+"succes"]}, function(err, results){
-                            console.log((mochaAwesomeReport.results[i].suites[j].tests[k].title) +(" succes"));
+                            dogapi.metric.send("metric." + (mochaAwesomeReport.results[i].suites[j].tests[k].title), 1,
+                                {type: "count", tags: ["env:prd","alertLevel:"+"succes"]}, function(err, results){
+                                console.log((mochaAwesomeReport.results[i].suites[j].tests[k].title) +(" succes"));
                             });
                         }
                     }
