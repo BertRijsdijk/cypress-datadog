@@ -1,4 +1,2 @@
-Send your mocha test results to datadog as metrics
+# functional-monitoring-workshop
 
-### Configure 
-Enable monitoring

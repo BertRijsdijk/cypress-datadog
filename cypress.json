@@ -1,13 +1,9 @@
 {
-  "blacklistHosts": [
-    "www.google-analytics.com",
-    "www.firebaselogging.googleapis.com"
-  ],
-  "defaultCommandTimeout": 10000,
-  "chromeWebSecurity": false,
-  "modifyObstructiveCode": true,
-  "reporter": "cypress-multi-reporters",
+  "reporter": "mochawesome",
   "reporterOptions": {
-    "configFile": "reporter.json"
+    "reportDir": "cypress/results",
+    "overwrite": false,
+    "html": false,
+    "json": true
   }
 }

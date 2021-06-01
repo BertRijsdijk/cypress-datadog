@@ -63,6 +63,7 @@ typings/
 # cypress videos
 videos/
 cypress/reports/
+cypress/results/
 screenshots/
 
 #intelij config
