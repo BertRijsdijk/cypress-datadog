@@ -1,4 +1,4 @@
-# functional-monitoring-workshop
+# mochawesome datadog integration for functional monitoring
 
 ## prerequisites
 
