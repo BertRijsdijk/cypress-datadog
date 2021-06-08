@@ -1,4 +1,4 @@
-{
+  {
   "name": "functional-monitoring-workshop",
   "version": "1.0.0",
   "main": "index.js",
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "pre-monitor": "rm cypress/results/* || true",
-    "monitor": "cypress run",
+    "monitor": "cypress run || true",
     "post-monitor": "node cypress/metric-reporter/reportToDatadog.js"
   }
 }

@@ -1,0 +1,22 @@
+image: cypress/base:12
+
+variables:
+  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - cache/Cypress
+    - node_modules
+
+before_script:
+  - yarn install
+
+functional-monitoring:
+  only:
+    - schedules
+
+  script:
+    - yarn run pre-monitor
+    - yarn run monitor
+    - yarn run post-monitor

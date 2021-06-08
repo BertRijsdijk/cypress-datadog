@@ -1,29 +1,30 @@
-const options = {
-    const options = {
-    api_host: api_host,
-    api_key: api_key,
-    app_key: app_key,
-};
-};
 const dogapi = require('dogapi');
-const testFolder = './cypress/results/';
 const fs = require('fs');
+
+const options = {
+    api_host: process.env.API_HOST,
+    api_key: process.env.API_KEY,
+    app_key: process.env.APP_KEY
+};
 dogapi.initialize(options);
 
-fs.readdirSync(testFolder).forEach(fileName => {
-    let rawdata = fs.readFileSync(testFolder + fileName);
+const resultsFolder = './cypress/results/';
+const tags = { tags: ["env:prd", "functional-monitoring"] };
+
+fs.readdirSync(resultsFolder).forEach(fileName => {
+    let rawdata = fs.readFileSync(resultsFolder + fileName);
     let file = JSON.parse(rawdata);
+
     file.results.forEach(result => {
         result.suites.forEach(suite => {
             suite.tests.forEach(test => {
+                console.log("Executed test: " + test.title, [test.duration, test.state]);
 
-                console.log("function.monitoring.checkout.duration." + (test.title)
-                    , [(test.duration),(test.state)]);
+                dogapi.metric.send(`functional.monitoring.result.${test.state}.${test.title}`,
+                    1, {type: "count", ...tags}, (err, results) => {});
 
-                dogapi.metric.send("function.monitoring.test.duration." + test.title
-                    , [test.duration,test.state, file.stats.start, file.stats.end]
-                    , {tags: ["env:prd", "e2e functional monitoring"]}, function(err, results){
-                    });
+                dogapi.metric.send(`functional.monitoring.duration.${test.title}`,
+                    [test.duration], tags, (err, results) => {});
             });
         });
     });
