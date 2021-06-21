@@ -1,5 +1,5 @@
 # mochawesome datadog integration for functional monitoring
-process Cypress test results to Datadog metrics with the help of the Mochawesome reporter
+Generate Datadog metrics from Cypress test results with the help of the Mochawesome reporter
 
 ## Prerequisites
 -   nodejs
