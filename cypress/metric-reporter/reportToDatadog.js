@@ -2,7 +2,7 @@ const dogapi = require('dogapi');
 const fs = require('fs');
 
 const options = {
-    api_host: process.env.API_HOST,
+    api_host: "app.datadoghq.eu",
     api_key: process.env.API_KEY,
     app_key: process.env.APP_KEY
 };
@@ -18,13 +18,17 @@ fs.readdirSync(resultsFolder).forEach(fileName => {
     file.results.forEach(result => {
         result.suites.forEach(suite => {
             suite.tests.forEach(test => {
-                console.log("Executed test: " + test.title, [test.duration, test.state]);
+                if (test.pending) {
+                    console.log("Pending test will not be reported: " + test.title);
+                } else {
+                    console.log("Executed test: " + test.title, [test.duration, test.state]);
 
-                dogapi.metric.send(`functional.monitoring.result.${test.state}.${test.title}`,
-                    1, {type: "count", ...tags}, (err, results) => {});
+                    dogapi.metric.send(`functional.monitoring.result.${test.state}.${test.title}`,
+                        1, {type: "count", ...tags}, (err, results) => {});
 
-                dogapi.metric.send(`functional.monitoring.duration.${test.title}`,
-                    [test.duration], tags, (err, results) => {});
+                    dogapi.metric.send(`functional.monitoring.duration.${test.title}`,
+                        [test.duration], tags, (err, results) => {});
+                }
             });
         });
     });

@@ -20,3 +20,10 @@ functional-monitoring:
     - yarn run pre-monitor
     - yarn run monitor
     - yarn run post-monitor
+
+  artifacts:
+    expire_in: 1 hrs
+    when: always
+    paths:
+      - cypress/screenshots
+      - cypress/videos
