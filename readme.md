@@ -27,6 +27,6 @@ Push test results to Datadog:
 Error handling on Metric.send in reportToDatadog.js
 
 ## Other
-- Remember to set API_KEY and APP_KEY as env variables
+- Set your API_KEY and APP_KEY as env variables for dogapi
 - Thanks Jochum Börger and Erik Zeedijk for input and feedback
 
