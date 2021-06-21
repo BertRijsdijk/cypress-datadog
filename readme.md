@@ -24,7 +24,9 @@ Push test results to Datadog:
 -   `yarn run post-monitor`
 
 ## To Do
-Error handling on Metric.send in reportToDatadog.js
+-   Error handling on Metric.send in reportToDatadog.js
+-   Tested with Mochawesome reporting from Cypress, untested with "Vanilla" Mocha/Chai
+
 
 ## Other
 - Set your API_KEY and APP_KEY as env variables for dogapi
