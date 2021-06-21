@@ -24,10 +24,10 @@ fs.readdirSync(resultsFolder).forEach(fileName => {
                     console.log("Executed test: " + test.title, [test.duration, test.state]);
 
                     dogapi.metric.send(`functional.monitoring.result.${test.state}.${test.title}`,
-                        1, {type: "count", ...tags}, (err, results) => {});
+                        1, {type: "count", ...tags}, () => {});
 
                     dogapi.metric.send(`functional.monitoring.duration.${test.title}`,
-                        [test.duration], tags, (err, results) => {});
+                        [test.duration], tags, () => {});
                 }
             });
         });
